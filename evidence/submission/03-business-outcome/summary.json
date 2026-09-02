@@ -1,7 +1,7 @@
 {
   "status": "business_outcome",
   "capability_name": "lookup_member_balance",
-  "run_id": "replay-ef1a22f51d",
+  "run_id": "replay-93ffa432b1",
   "llm_calls": 0,
   "outputs": {},
   "business_outcome": {
@@ -10,6 +10,6 @@
   },
   "failure": null,
   "recovered_conditions": [],
-  "evidence_dir": "/workspace/evidence/runs/replay-ef1a22f51d",
-  "duration_ms": 1013
+  "evidence_dir": "/workspace/evidence/runs/replay-93ffa432b1",
+  "duration_ms": 870
 }

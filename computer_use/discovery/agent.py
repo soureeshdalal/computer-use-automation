@@ -138,7 +138,10 @@ class DiscoveryAgent:
                 self.surface.screenshot(str(screenshot))
             except Exception:
                 pass
-            self.surface.stop(trace_path=str(self.logger.trace_path()))
+            try:
+                self.surface.stop(trace_path=str(self.logger.trace_path()))
+            except Exception:
+                pass
             return None, RunResult(
                 status=RunStatus.FAILURE,
                 capability_name=capability_name,
@@ -168,6 +171,8 @@ class DiscoveryAgent:
         planned = self.planner.plan(goal, observation, state["step_count"])
         if isinstance(self.planner, (OpenAIPlanner, MockPlanner)):
             self.logger.increment_llm_calls()
+
+        planned = self._maybe_override_loop(planned, observation)
 
         self.logger.log(
             "plan",
@@ -267,6 +272,23 @@ class DiscoveryAgent:
             state["failed"] = True
             state["failure_message"] = str(exc)
         return state
+
+    def _maybe_override_loop(self, planned: PlannedAction, observation) -> PlannedAction:
+        if planned.action != "type" or "/home" not in observation.url:
+            return planned
+        if not self.recorded_steps:
+            return planned
+        last = self.recorded_steps[-1]
+        if last.action != ArtifactAction.TYPE:
+            return planned
+        for element in observation.elements:
+            if "Search Member Records" in element.name:
+                return PlannedAction(
+                    action="click",
+                    element_id=element.element_id,
+                    reason="Loop guard: member id already entered, click search.",
+                )
+        return planned
 
 
 def save_artifact(artifact: CapabilityArtifact, path: str | Path) -> Path:

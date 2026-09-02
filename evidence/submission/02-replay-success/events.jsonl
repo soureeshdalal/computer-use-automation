@@ -1,5 +1,5 @@
-{"ts": "2026-09-02T16:03:13.137609+00:00", "run_id": "replay-1e696644f6", "event": "replay_step", "payload": {"step_id": "step_1", "action": "type", "value": "ops001"}}
-{"ts": "2026-09-02T16:03:13.225272+00:00", "run_id": "replay-1e696644f6", "event": "replay_step", "payload": {"step_id": "step_2", "action": "type", "value": "demo"}}
-{"ts": "2026-09-02T16:03:13.336597+00:00", "run_id": "replay-1e696644f6", "event": "replay_step", "payload": {"step_id": "step_3", "action": "click", "value": null}}
-{"ts": "2026-09-02T16:03:13.422370+00:00", "run_id": "replay-1e696644f6", "event": "replay_step", "payload": {"step_id": "step_4", "action": "type", "value": "42424"}}
-{"ts": "2026-09-02T16:03:13.562112+00:00", "run_id": "replay-1e696644f6", "event": "replay_step", "payload": {"step_id": "step_5", "action": "click", "value": null}}
+{"ts": "2026-09-02T17:34:43.862743+00:00", "run_id": "replay-180a1595c2", "event": "replay_step", "payload": {"step_id": "step_1", "action": "type", "value": "demo"}}
+{"ts": "2026-09-02T17:34:43.982982+00:00", "run_id": "replay-180a1595c2", "event": "replay_step", "payload": {"step_id": "step_2", "action": "click", "value": null}}
+{"ts": "2026-09-02T17:34:44.073167+00:00", "run_id": "replay-180a1595c2", "event": "replay_step", "payload": {"step_id": "step_3", "action": "type", "value": "54321"}}
+{"ts": "2026-09-02T17:34:44.165669+00:00", "run_id": "replay-180a1595c2", "event": "replay_step", "payload": {"step_id": "step_4", "action": "click", "value": null}}
+{"ts": "2026-09-02T17:34:44.226667+00:00", "run_id": "replay-180a1595c2", "event": "replay_step", "payload": {"step_id": "step_5", "action": "extract", "value": null}}

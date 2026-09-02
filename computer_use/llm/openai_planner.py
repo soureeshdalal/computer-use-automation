@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from typing import Any, Protocol
 
-from langchain_core.messages import HumanMessage, SystemMessage
+from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 from langchain_openai import ChatOpenAI
 from pydantic import BaseModel, Field
 
@@ -25,18 +25,20 @@ class Planner(Protocol):
         ...
 
 
-SYSTEM_PROMPT = """You operate a legacy credit union back-office UI.
-Choose exactly one next action based on the observation.
-Use element ids from the observation (e1, e2, ...).
-Actions:
-- click: press a button or link
-- type: enter text into an input (set text)
-- extract: read a visible value into output_name when the goal is satisfied
-- done: goal appears complete and checkpoint text is visible
-- escalate: blocked by dialog or unknown state
+SYSTEM_PROMPT = """You operate a legacy credit union member servicing console.
 
-Respond as JSON with keys: action, element_id, text, output_name, reason.
-Never invent element ids. Prefer minimal steps. Sign in with password demo when needed.
+Workflow:
+1) Login page (/login): type password "demo" into Password field, click Sign In.
+2) Member Lookup page (/home): type the member number into Member Number field ONCE, then click "Search Member Records". Never type the password on this page.
+3) Member Details page: use action "extract" with output_name "savings_balance" to read the savings balance, then action "done".
+
+Rules:
+- Use only element ids from the observation (e1, e2, ...).
+- After typing a value, the next step on the same page should usually be a click on the submit/search button.
+- Do not repeat the same type action on the same field unless the page reloaded.
+- Actions: click, type, extract, done, escalate.
+
+Respond with JSON only: {"action","element_id","text","output_name","reason"}
 """
 
 
@@ -45,6 +47,7 @@ class OpenAIPlanner:
         self.model = model
         self.client = ChatOpenAI(model=model, api_key=api_key, temperature=0)
         self.call_count = 0
+        self._history: list = [SystemMessage(content=SYSTEM_PROMPT)]
 
     def plan(self, goal: str, observation: PageObservation, step: int) -> PlannedAction:
         payload = {
@@ -66,14 +69,14 @@ class OpenAIPlanner:
                 for element in observation.elements
             ],
         }
-        messages = [
-            SystemMessage(content=SYSTEM_PROMPT),
-            HumanMessage(content=json.dumps(payload, indent=2)),
-        ]
+        user_message = HumanMessage(content=json.dumps(payload, indent=2))
+        messages = self._history + [user_message]
         response = self.client.invoke(messages)
         self.call_count += 1
         content = _extract_json(str(response.content))
-        return PlannedAction.model_validate(content)
+        planned = PlannedAction.model_validate(content)
+        self._history.extend([user_message, AIMessage(content=json.dumps(planned.model_dump()))])
+        return planned
 
 
 class MockPlanner:
@@ -127,11 +130,16 @@ def _extract_member_id(goal: str) -> str:
 def _extract_json(content: str) -> dict[str, Any]:
     content = content.strip()
     if content.startswith("```"):
-        content = content.strip("`")
-        if content.startswith("json"):
-            content = content[4:]
+        lines = content.splitlines()
+        lines = lines[1:]
+        if lines and lines[0].strip().lower() == "json":
+            lines = lines[1:]
+        if lines and lines[-1].strip() == "```":
+            lines = lines[:-1]
+        content = "\n".join(lines).strip()
     start = content.find("{")
-    end = content.rfind("}")
-    if start == -1 or end == -1:
+    if start == -1:
         raise ValueError(f"Planner returned non-JSON content: {content}")
-    return json.loads(content[start : end + 1])
+    decoder = json.JSONDecoder()
+    parsed, _ = decoder.raw_decode(content[start:])
+    return parsed

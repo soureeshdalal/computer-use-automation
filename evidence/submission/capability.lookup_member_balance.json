@@ -3,7 +3,7 @@
   "name": "lookup_member_balance",
   "version": "1.0.0",
   "description": "Look up a member and read the savings balance.",
-  "goal_template": "Look up member {{member_id}} and read their savings balance",
+  "goal_template": "Sign in, look up member {{member_id}}, and read the savings balance",
   "target": {
     "vendor": "demo-cu-core",
     "app_name": "Member Servicing Console",
@@ -35,38 +35,6 @@
   "steps": [
     {
       "id": "step_1",
-      "action": "type",
-      "targets": [
-        {
-          "strategy": "role_name",
-          "role": "textbox",
-          "name": "Operator ID",
-          "label": null,
-          "placeholder": null,
-          "text": null,
-          "attribute": null,
-          "value": null,
-          "rationale": "Primary accessible role and name pairing."
-        },
-        {
-          "strategy": "label",
-          "role": null,
-          "name": null,
-          "label": "Operator ID",
-          "placeholder": null,
-          "text": null,
-          "attribute": null,
-          "value": null,
-          "rationale": "Form label or aria-label text."
-        }
-      ],
-      "value_template": "ops001",
-      "output_name": null,
-      "risky": false,
-      "notes": ""
-    },
-    {
-      "id": "step_2",
       "action": "type",
       "targets": [
         {
@@ -109,7 +77,7 @@
       "notes": ""
     },
     {
-      "id": "step_3",
+      "id": "step_2",
       "action": "click",
       "targets": [
         {
@@ -152,7 +120,7 @@
       "notes": ""
     },
     {
-      "id": "step_4",
+      "id": "step_3",
       "action": "type",
       "targets": [
         {
@@ -184,7 +152,7 @@
       "notes": ""
     },
     {
-      "id": "step_5",
+      "id": "step_4",
       "action": "click",
       "targets": [
         {
@@ -227,7 +195,7 @@
       "notes": ""
     },
     {
-      "id": "step_6",
+      "id": "step_5",
       "action": "extract",
       "targets": [
         {
@@ -253,10 +221,10 @@
     "http://127.0.0.1:8765/*"
   ],
   "provenance": {
-    "planner": "MockPlanner",
-    "model": "mock",
-    "recorded_at": "2026-09-02T16:02:47.136980+00:00",
-    "discovery_run_id": "discovery-aaa4596805",
-    "llm_calls": 6
+    "planner": "OpenAIPlanner",
+    "model": "gpt-4o-mini",
+    "recorded_at": "2026-09-02T17:34:38.337169+00:00",
+    "discovery_run_id": "discovery-ecc18501ee",
+    "llm_calls": 5
   }
 }

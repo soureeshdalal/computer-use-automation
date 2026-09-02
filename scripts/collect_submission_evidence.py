@@ -56,12 +56,16 @@ def main() -> int:
         if not summary_path.exists():
             continue
         summary = json.loads(summary_path.read_text(encoding="utf-8"))
-        if summary.get("status") == "success" and success_run is None:
-            success_run = run
         if summary.get("status") == "business_outcome" and business_run is None:
             business_run = run
-        if summary.get("recovered_conditions") and handoff_run is None:
+        if summary.get("status") == "success" and summary.get("recovered_conditions") and handoff_run is None:
             handoff_run = run
+        if (
+            summary.get("status") == "success"
+            and not summary.get("recovered_conditions")
+            and success_run is None
+        ):
+            success_run = run
 
     folder_sources = {
         "01-discovery": run_map["01-discovery"][0] if run_map["01-discovery"] else None,

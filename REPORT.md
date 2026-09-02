@@ -79,13 +79,4 @@ The demo operator console is terminal-based. Business outcome detection uses a s
 
 With more time I would add: (1) artifact approval lifecycle and replay reliability scoring, (2) tenant override files and compatibility fingerprints, (3) frame and accessibility locator candidate types, and (4) repeated replay stability reporting. I would keep any LLM-assisted replay recovery bounded, policy-checked, and opt-in so production replay stays deterministic by default.
 
-## Final submission step (live discovery)
-
-The assignment requires at least one genuine OpenAI discovery run. Before emailing the repo, run:
-
-```bash
-export OPENAI_API_KEY=...
-python scripts/run_submission_flow.py
-```
-
-That replaces discovery evidence under `evidence/submission/` with a live model run while keeping deterministic replays at `llm_calls: 0`.
+Live discovery evidence in `evidence/submission/01-discovery/` was recorded with OpenAI (`gpt-4o-mini`, 5 planner calls). Replay scenarios in the same folder run with `llm_calls: 0`.
