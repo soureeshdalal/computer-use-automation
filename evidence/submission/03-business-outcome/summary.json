@@ -1,0 +1,15 @@
+{
+  "status": "business_outcome",
+  "capability_name": "lookup_member_balance",
+  "run_id": "replay-ef1a22f51d",
+  "llm_calls": 0,
+  "outputs": {},
+  "business_outcome": {
+    "code": "MEMBER_NOT_FOUND",
+    "message": "No member record exists for the supplied identifier."
+  },
+  "failure": null,
+  "recovered_conditions": [],
+  "evidence_dir": "/workspace/evidence/runs/replay-ef1a22f51d",
+  "duration_ms": 1013
+}

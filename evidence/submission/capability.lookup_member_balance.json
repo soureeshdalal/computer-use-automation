@@ -1,0 +1,262 @@
+{
+  "schema_version": "1.0",
+  "name": "lookup_member_balance",
+  "version": "1.0.0",
+  "description": "Look up a member and read the savings balance.",
+  "goal_template": "Look up member {{member_id}} and read their savings balance",
+  "target": {
+    "vendor": "demo-cu-core",
+    "app_name": "Member Servicing Console",
+    "entry_url": "http://127.0.0.1:8765/login",
+    "version": "1.0"
+  },
+  "inputs": {
+    "member_id": {
+      "name": "member_id",
+      "type": "string",
+      "description": "Member number to look up",
+      "required": true
+    },
+    "operator_password": {
+      "name": "operator_password",
+      "type": "string",
+      "description": "Operator console password",
+      "required": true
+    }
+  },
+  "outputs": {
+    "savings_balance": {
+      "name": "savings_balance",
+      "type": "string",
+      "description": "Current savings balance text",
+      "required": true
+    }
+  },
+  "steps": [
+    {
+      "id": "step_1",
+      "action": "type",
+      "targets": [
+        {
+          "strategy": "role_name",
+          "role": "textbox",
+          "name": "Operator ID",
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Primary accessible role and name pairing."
+        },
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Operator ID",
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Form label or aria-label text."
+        }
+      ],
+      "value_template": "ops001",
+      "output_name": null,
+      "risky": false,
+      "notes": ""
+    },
+    {
+      "id": "step_2",
+      "action": "type",
+      "targets": [
+        {
+          "strategy": "role_name",
+          "role": "textbox",
+          "name": "Password",
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Primary accessible role and name pairing."
+        },
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Password",
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Form label or aria-label text."
+        },
+        {
+          "strategy": "css_attr",
+          "role": null,
+          "name": null,
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": "type",
+          "value": "password",
+          "rationale": "Password field fallback."
+        }
+      ],
+      "value_template": "{{operator_password}}",
+      "output_name": null,
+      "risky": false,
+      "notes": ""
+    },
+    {
+      "id": "step_3",
+      "action": "click",
+      "targets": [
+        {
+          "strategy": "role_name",
+          "role": "button",
+          "name": "Sign In",
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Primary accessible role and name pairing."
+        },
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Sign In",
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Form label or aria-label text."
+        },
+        {
+          "strategy": "text",
+          "role": null,
+          "name": null,
+          "label": null,
+          "placeholder": null,
+          "text": "Sign In",
+          "attribute": null,
+          "value": null,
+          "rationale": "Visible control text for legacy buttons/links."
+        }
+      ],
+      "value_template": null,
+      "output_name": null,
+      "risky": false,
+      "notes": ""
+    },
+    {
+      "id": "step_4",
+      "action": "type",
+      "targets": [
+        {
+          "strategy": "role_name",
+          "role": "textbox",
+          "name": "Member Number",
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Primary accessible role and name pairing."
+        },
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Member Number",
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Form label or aria-label text."
+        }
+      ],
+      "value_template": "{{member_id}}",
+      "output_name": null,
+      "risky": false,
+      "notes": ""
+    },
+    {
+      "id": "step_5",
+      "action": "click",
+      "targets": [
+        {
+          "strategy": "role_name",
+          "role": "button",
+          "name": "Search Member Records",
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Primary accessible role and name pairing."
+        },
+        {
+          "strategy": "label",
+          "role": null,
+          "name": null,
+          "label": "Search Member Records",
+          "placeholder": null,
+          "text": null,
+          "attribute": null,
+          "value": null,
+          "rationale": "Form label or aria-label text."
+        },
+        {
+          "strategy": "text",
+          "role": null,
+          "name": null,
+          "label": null,
+          "placeholder": null,
+          "text": "Search Member Records",
+          "attribute": null,
+          "value": null,
+          "rationale": "Visible control text for legacy buttons/links."
+        }
+      ],
+      "value_template": null,
+      "output_name": null,
+      "risky": false,
+      "notes": ""
+    },
+    {
+      "id": "step_6",
+      "action": "extract",
+      "targets": [
+        {
+          "strategy": "css_attr",
+          "role": null,
+          "name": null,
+          "label": null,
+          "placeholder": null,
+          "text": null,
+          "attribute": "id",
+          "value": "savings-balance",
+          "rationale": "Savings balance cell in member detail table."
+        }
+      ],
+      "value_template": null,
+      "output_name": "savings_balance",
+      "risky": false,
+      "notes": ""
+    }
+  ],
+  "success_checkpoint": "Member Details",
+  "allowlist": [
+    "http://127.0.0.1:8765/*"
+  ],
+  "provenance": {
+    "planner": "MockPlanner",
+    "model": "mock",
+    "recorded_at": "2026-09-02T16:02:47.136980+00:00",
+    "discovery_run_id": "discovery-aaa4596805",
+    "llm_calls": 6
+  }
+}

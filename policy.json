@@ -1,0 +1,10 @@
+{
+  "allowed_hosts": ["127.0.0.1", "localhost"],
+  "allowed_actions": ["click", "type", "select", "navigate", "extract", "wait", "press"],
+  "blocked_control_patterns": ["delete all", "wipe", "purge database"],
+  "risky_control_patterns": ["transfer", "create account", "submit payment", "close account"],
+  "max_steps": 40,
+  "step_timeout_ms": 15000,
+  "max_retries": 2,
+  "require_human_for_risky": true
+}

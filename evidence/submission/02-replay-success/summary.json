@@ -1,0 +1,14 @@
+{
+  "status": "success",
+  "capability_name": "lookup_member_balance",
+  "run_id": "replay-1e696644f6",
+  "llm_calls": 0,
+  "outputs": {},
+  "business_outcome": null,
+  "failure": null,
+  "recovered_conditions": [
+    "auto_ack_dialog"
+  ],
+  "evidence_dir": "/workspace/evidence/runs/replay-1e696644f6",
+  "duration_ms": 1127
+}
